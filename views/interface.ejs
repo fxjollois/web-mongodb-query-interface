@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <title>Web MongoDB Query Interface</title>
+        
+        <link rel="stylesheet" href="bootstrap-3.3.6/css/bootstrap.min.css">
+        <script src="jquery-2.2.1.min.js"></script>
+        <script src="ace/ace.js"></script>
+        
+        <style>
+            #query {
+                display: none;
+            }
+            #editor, #result {
+                height: 600px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Web MongoDB Query Interface</h1>
+            <form method="post" action="/">
+                <input type="submit" id="submit" value="Submit" class="btn btn-default">
+                <textarea class="form-control" name="query" id="query"><%= query %></textarea>
+            </form>
+            <div class="row">
+                <div class="col-sm-6">
+                    <label for="query">Query:</label>
+                    <div id="editor"><%= query %></div>
+                </div>
+                
+                 <div class="col-sm-6">
+                     <label for="result">Result:</label>
+                     <div id="result"><%= result %></div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            var textarea = $('#query');
+            
+            var editor = ace.edit("editor");
+            editor.setTheme("ace/theme/twilight");
+            editor.getSession().setMode("ace/mode/javascript");
+            
+            editor.getSession().on('change', function () {
+                textarea.val(editor.getSession().getValue());
+            });
+            
+            textarea.val(editor.getSession().getValue());
+
+            var result = ace.edit("result");
+            result.session.setUseWorker(false);
+            result.setTheme("ace/theme/twilight");
+            result.getSession().setMode("ace/mode/json");
+        </script>
+
+        <script src="bootstrap-3.3.6/js/bootstrap.min.js"></script>
+    </body>
+</html>
