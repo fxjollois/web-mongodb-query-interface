@@ -20,20 +20,25 @@ app.get('/', function (req, res) {
 app.post('/', function (req, res) {
     "use strict";
     var query = req.body.query,
-        cmd = 'mongo --quiet < __query.js > __result.json';
-    fs.writeFile("__query.js", query, function (err) {
+        compfile = Math.round(Math.random() * 1000000000000000),
+        queryfile = '__query_' + compfile + '.js',
+        resultfile = '__result_' + compfile + '.json',
+        cmd = 'mongo --quiet < ' + queryfile + ' > ' + resultfile;
+    fs.writeFile(queryfile, query, function (err) {
         if (err) {
             return console.log(err);
         }
-        console.log("The file was saved!");
         exec(cmd, function (err, stdout, stderr) {
             if (err) {
                 console.log(stderr);
             }
-            fs.readFile('__result.json', function (err, data) {
+            fs.readFile(resultfile, function (err, data) {
                 res.render('interface.ejs', { query: query, result: data });
+                exec('rm ' + resultfile, function () {});
+                // fs.unlinkSync(resultfile);
             });
         });
+        exec('rm ' + queryfile, function () {});
     });
 });
 
