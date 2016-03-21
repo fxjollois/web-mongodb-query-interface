@@ -16,7 +16,7 @@
                 display: none;
             }
             #editor, #result {
-                height: 600px;
+                height: 400px;
             }
         </style>
     </head>
@@ -25,6 +25,17 @@
             <h1>Web MongoDB Query Interface</h1>
             <form method="post" action="/">
                 <input type="submit" id="submit" value="Submit" class="btn btn-default">
+                <%
+                    dbs.forEach( function(db, i) {
+                %>
+                <label class="radio-inline">
+                    <input type="radio" 
+                           name="whichdb" 
+                           value="<%= db %>" 
+                           <% if ( i == 0 ) { %>checked<% } %>
+                           ><%= db %>
+                </label>
+                <% }) %>
                 <textarea class="form-control" name="query" id="query"><%= query %></textarea>
             </form>
             <div class="row">
@@ -41,9 +52,7 @@
         </div>
         
         <footer class="footer">
-            <div class="container center">
-                <p class="text-muted"><a href="https://github.com/fxjollois/web-mongodb-query-interface" target="_blank">Web-app</a> created by <a href="http://www.github.com/fxjollois" target="_blank">fxjollois</a></p>
-            </div>
+            <p class="text-center"><a href="https://github.com/fxjollois/web-mongodb-query-interface" target="_blank">Web-app</a> created by <a href="http://www.github.com/fxjollois" target="_blank">fxjollois</a></p>
         </footer>
 
         <script>

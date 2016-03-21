@@ -14,6 +14,7 @@ Web interface to query mongo
 - Express
 - ejs
 - body-parser
+- uglyfile-js
 
 ## JS libraries
 
